@@ -1,0 +1,27 @@
+{
+  "name": "vuethereum",
+  "version": "0.1.0",
+  "description": "Vue components for working with Ethereum",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matryx/vuethereum.git"
+  },
+  "keywords": [
+    "vue",
+    "ethereum",
+    "web3",
+    "smart",
+    "contract",
+    "metamask"
+  ],
+  "author": "Nanome <dev@nanome.ai>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matryx/vuethereum/issues"
+  },
+  "homepage": "https://github.com/matryx/vuethereum#readme"
+}
