@@ -1,6 +1,6 @@
 {
   "name": "vuethereum",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Vue components for working with Ethereum",
   "main": "index.js",
   "scripts": {
