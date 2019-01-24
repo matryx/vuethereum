@@ -1,3 +1,3 @@
-# vuethereum
+# Vuethereum
 
-### Vue components for working with Ethereum
+### The Vue library Ethereum deserves
