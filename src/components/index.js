@@ -1,9 +1,11 @@
+import VthBlockie from "./Blockie.vue"
+import VthContract from "./Contract.vue"
 import VthStatus from "./Status.vue"
 import VthTx from "./Tx.vue"
-import VthContract from "./Contract.vue"
 
 export {
-  VthStatus,
+  VthBlockie,
   VthContract,
+  VthStatus,
   VthTx
 }

@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/matryx/vuethereum#readme",
   "dependencies": {
+    "blockies": "0.0.2",
     "ethers": "^3.0.26"
   },
   "devDependencies": {
