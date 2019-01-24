@@ -2,6 +2,8 @@
 import { getMinedTx } from "../utils"
 
 export default {
+  name: "vth-tx",
+
   props: {
     tx: {
       type: [String, Object],

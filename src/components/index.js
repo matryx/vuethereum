@@ -1,5 +1,9 @@
-import Web3Provider from "./Web3Provider.vue"
+import VthStatus from "./Status.vue"
+import VthTx from "./Tx.vue"
+import VthContract from "./Contract.vue"
 
 export {
-  Web3Provider
+  VthStatus,
+  VthContract,
+  VthTx
 }

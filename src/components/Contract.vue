@@ -2,6 +2,8 @@
 import ethers from "ethers"
 
 export default {
+  name: "vth-contract",
+
   props: {
     address: {
       type: String,

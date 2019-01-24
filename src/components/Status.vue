@@ -2,6 +2,8 @@
 import Web3 from "web3"
 
 export default {
+  name: "vth-status",
+
   // TODO: Props?
   // config={{
   //   DEBUG:false,
@@ -44,7 +46,7 @@ export default {
       const getAccounts = window.ethereum.enable()
 
       this.loading = true
-      Promise.all([getAccounts, getNetwork])
+      return Promise.all([getAccounts, getNetwork])
         .then(results => {
           const [accounts, networkVersion] = results
           this.account = accounts[0]
