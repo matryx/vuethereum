@@ -66,6 +66,7 @@ export default {
 
     update() {
       this.$emit("update", {
+        available: this.available,
         enabled: this.enabled,
         account: this.account,
         networkVersion: this.networkVersion
