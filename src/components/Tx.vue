@@ -1,5 +1,5 @@
 <script>
-import { getMinedTx } from "../utils"
+import { getMinedTx } from "../utils/index"
 
 export default {
   name: "vth-tx",
