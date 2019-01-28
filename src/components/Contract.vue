@@ -34,7 +34,6 @@ export default {
     })
     if (children.length) {
       // Can only return 1 root node
-      console.warn("[SmartContract] Requires 1 root element. Using injected <div>.")
       return create("div", [children])
     }
     return children

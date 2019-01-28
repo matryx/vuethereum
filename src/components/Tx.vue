@@ -81,7 +81,6 @@ export default {
       getMinedTx: this.getMinedTx
     })
     if (children.length) {
-      console.warn("[PendingTx] Requires 1 root element. Using injected <div>.")
       return create("div", [children])
     }
     return children

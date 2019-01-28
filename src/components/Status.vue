@@ -97,7 +97,6 @@ export default {
       getWeb3: this.getWeb3
     })
     if (children.length) {
-      console.warn("[Web3Provider] Requires 1 root element. Using injected <div>.")
       return create("div", [children])
     }
     return children
