@@ -119,7 +119,7 @@
   /* script */
   var __vue_script__ = script;
   // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
-  script.__file = "/home/austin/nanome/vuethereum/src/components/Blockie.vue";
+  script.__file = "/home/austin/nanome/vuethereum/src/components/blockie/Blockie.vue";
 
   /* template */
 
@@ -179,7 +179,6 @@
       var children = this.$scopedSlots.default(Object.assign({}, this.contract));
       if (children.length) {
         // Can only return 1 root node
-        console.warn("[SmartContract] Requires 1 root element. Using injected <div>.");
         return create("div", [children])
       }
       return children
@@ -319,7 +318,6 @@
         getWeb3: this.getWeb3
       });
       if (children.length) {
-        console.warn("[Web3Provider] Requires 1 root element. Using injected <div>.");
         return create("div", [children])
       }
       return children
@@ -491,7 +489,6 @@
         getMinedTx: this.getMinedTx
       });
       if (children.length) {
-        console.warn("[PendingTx] Requires 1 root element. Using injected <div>.");
         return create("div", [children])
       }
       return children
