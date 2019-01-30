@@ -1,6 +1,9 @@
 <script>
 import ethers from "ethers"
 
+/**
+ * Sets up smart contracts and provides them via scoped-slots
+ */
 export default {
   name: "vth-contract",
 
@@ -33,7 +36,7 @@ export default {
       ...this.contract // Must pass in clone
     })
     if (children.length) {
-      // Can only return 1 root node
+      // Can only return 1 root node. If more are passed in, we can wrap them.
       return create("div", [children])
     }
     return children

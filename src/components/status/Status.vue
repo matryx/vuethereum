@@ -20,6 +20,16 @@ export default {
   //  }
   // }}
 
+  props: {
+    /**
+     * Whether the request to enable Web3 should happen right away.
+     */
+    deferred: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data: () => ({
     loading: false,
     available: false,
@@ -29,7 +39,14 @@ export default {
   }),
 
   methods: {
+    /**
+     * Sets up web3, calls window.ethereum.enable(), and updates status
+     * @public
+     */
     getWeb3() {
+      if (typeof window.ethereum === "undefined") {
+        return
+      }
       this.available = true
 
       const web3 = new Web3(window.ethereum)
@@ -46,7 +63,7 @@ export default {
       const getAccounts = window.ethereum.enable()
 
       this.loading = true
-      return Promise.all([getAccounts, getNetwork])
+      Promise.all([getAccounts, getNetwork])
         .then(results => {
           const [accounts, networkVersion] = results
           this.account = accounts[0]
@@ -65,6 +82,11 @@ export default {
     },
 
     update() {
+      /**
+       * Fires when the status of Web3 changes.
+       * @event update
+       * @type { object }
+       */
       this.$emit("update", {
         available: this.available,
         enabled: this.enabled,
@@ -75,15 +97,17 @@ export default {
   },
 
   mounted() {
-    if (typeof window.ethereum === "undefined") {
+    if (this.deferred || typeof window.ethereum === "undefined") {
       return
     }
     this.getWeb3().then(() => {
-      window.web3.currentProvider.publicConfigStore.on("update", config => {
-        this.account = config.selectedAddress
-        this.networkVersion = config.networkVersion
-        this.update()
-      })
+      window.web3.currentProvider.publicConfigStore
+        .on("update", config => {
+          this.account = config.selectedAddress
+          this.networkVersion = config.networkVersion
+          this.update()
+        })
+        .catch(error => {})
     })
   },
 
