@@ -101,15 +101,11 @@ export default {
       return
     }
     this.getWeb3().then(() => {
-      window.web3.currentProvider.publicConfigStore
-        .on("update", config => {
-          this.account = config.selectedAddress
-          this.networkVersion = config.networkVersion
-          this.update()
-        })
-        .catch(error => {
-          // TODO
-        })
+      window.web3.currentProvider.publicConfigStore.on("update", config => {
+        this.account = config.selectedAddress
+        this.networkVersion = config.networkVersion
+        this.update()
+      })
     })
   },
 
