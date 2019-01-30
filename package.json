@@ -1,6 +1,6 @@
 {
   "name": "vuethereum",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The Vue library Ethereum deserves",
   "main": "dist/vuethereum.umd.js",
   "module": "dist/vuethereum.esm.js",

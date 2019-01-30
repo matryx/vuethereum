@@ -4,30 +4,46 @@ import Web3 from 'web3';
 
 var NAME = "vth-blockie";
 
+/**
+ * Component for implementing [Ethereum Blockies](https://github.com/ethereum/blockies)
+ */
 var script = {
   name: NAME,
 
   functional: true,
 
   props: {
+    /**
+     * The string you want to depict as a blockie (usually an Ethereum address)
+     */
     string: {
       type: String,
       required: true
     },
+    /**
+     * Accepts the same options as [Ethereum Blockies](https://github.com/ethereum/blockies#use)
+     */
     options: {
       type: Object
+    },
+    /**
+     * If you want the final result to be round
+     */
+    round: {
+      type: Boolean
     }
   },
 
   render: function render(create, ref) {
+    var obj;
+
     var props = ref.props;
     var data = ref.data;
-
     var avatar = blockies(Object.assign({}, props.options,
       {seed: props.string}));
 
     return create("img", {
-      class: [NAME, data.staticClass],
+      class: [NAME, data.staticClass, ( obj = {}, obj[(NAME + "--round")] = props.round, obj )],
       attrs: Object.assign({}, data.attrs,
         {src: avatar.toDataURL(),
         alt: data.attrs.alt || props.string})
@@ -110,6 +126,56 @@ function normalizeComponent(compiledTemplate, injectStyle, defaultExport, scopeI
     return defaultExport;
 }
 
+var isOldIE = typeof navigator !== 'undefined' &&
+    /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+function createInjector(context) {
+    return function (id, style) { return addStyle(id, style); };
+}
+var HEAD = document.head || document.getElementsByTagName('head')[0];
+var styles = {};
+function addStyle(id, css) {
+    var group = isOldIE ? css.media || 'default' : id;
+    var style = styles[group] || (styles[group] = { ids: new Set(), styles: [] });
+    if (!style.ids.has(id)) {
+        style.ids.add(id);
+        var code = css.source;
+        if (css.map) {
+            // https://developer.chrome.com/devtools/docs/javascript-debugging
+            // this makes source maps inside style tags work properly in Chrome
+            code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+            // http://stackoverflow.com/a/26603875
+            code +=
+                '\n/*# sourceMappingURL=data:application/json;base64,' +
+                    btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+                    ' */';
+        }
+        if (!style.element) {
+            style.element = document.createElement('style');
+            style.element.type = 'text/css';
+            if (css.media)
+                { style.element.setAttribute('media', css.media); }
+            HEAD.appendChild(style.element);
+        }
+        if ('styleSheet' in style.element) {
+            style.styles.push(code);
+            style.element.styleSheet.cssText = style.styles
+                .filter(Boolean)
+                .join('\n');
+        }
+        else {
+            var index = style.ids.size - 1;
+            var textNode = document.createTextNode(code);
+            var nodes = style.element.childNodes;
+            if (nodes[index])
+                { style.element.removeChild(nodes[index]); }
+            if (nodes.length)
+                { style.element.insertBefore(textNode, nodes[index]); }
+            else
+                { style.element.appendChild(textNode); }
+        }
+    }
+}
+
 /* script */
 var __vue_script__ = script;
 // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
@@ -118,15 +184,17 @@ script.__file = "/home/austin/nanome/vuethereum/src/components/blockie/Blockie.v
 /* template */
 
   /* style */
-  var __vue_inject_styles__ = undefined;
+  var __vue_inject_styles__ = function (inject) {
+    if (!inject) { return }
+    inject("data-v-1564edca_0", { source: ".vth-blockie--round{border-radius:50%}", map: undefined, media: undefined });
+
+  };
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
   var __vue_module_identifier__ = undefined;
   /* functional template */
   var __vue_is_functional_template__ = undefined;
-  /* style inject */
-  
   /* style inject SSR */
   
 
@@ -138,10 +206,13 @@ script.__file = "/home/austin/nanome/vuethereum/src/components/blockie/Blockie.v
     __vue_scope_id__,
     __vue_is_functional_template__,
     __vue_module_identifier__,
-    undefined,
+    createInjector,
     undefined
   );
 
+/**
+ * Sets up smart contracts and provides them via scoped-slots
+ */
 var script$1 = {
   name: "vth-contract",
 
@@ -172,7 +243,7 @@ var script$1 = {
     }
     var children = this.$scopedSlots.default(Object.assign({}, this.contract));
     if (children.length) {
-      // Can only return 1 root node
+      // Can only return 1 root node. If more are passed in, we can wrap them.
       return create("div", [children])
     }
     return children
@@ -182,7 +253,7 @@ var script$1 = {
 /* script */
 var __vue_script__$1 = script$1;
 // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
-script$1.__file = "/home/austin/nanome/vuethereum/src/components/Contract.vue";
+script$1.__file = "/home/austin/nanome/vuethereum/src/components/contract/Contract.vue";
 
 /* template */
 
@@ -230,6 +301,16 @@ var script$2 = {
   //  }
   // }}
 
+  props: {
+    /**
+     * Whether the request to enable Web3 should happen right away.
+     */
+    deferred: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data: function () { return ({
     loading: false,
     available: false,
@@ -239,9 +320,16 @@ var script$2 = {
   }); },
 
   methods: {
+    /**
+     * Sets up web3, calls window.ethereum.enable(), and updates status
+     * @public
+     */
     getWeb3: function getWeb3() {
       var this$1 = this;
 
+      if (typeof window.ethereum === "undefined") {
+        return
+      }
       this.available = true;
 
       var web3 = new Web3(window.ethereum);
@@ -278,6 +366,11 @@ var script$2 = {
     },
 
     update: function update() {
+      /**
+       * Fires when the status of Web3 changes.
+       * @event update
+       * @type { object }
+       */
       this.$emit("update", {
         available: this.available,
         enabled: this.enabled,
@@ -290,7 +383,7 @@ var script$2 = {
   mounted: function mounted() {
     var this$1 = this;
 
-    if (typeof window.ethereum === "undefined") {
+    if (this.deferred || typeof window.ethereum === "undefined") {
       return
     }
     this.getWeb3().then(function () {
@@ -321,7 +414,7 @@ var script$2 = {
 /* script */
 var __vue_script__$2 = script$2;
 // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
-script$2.__file = "/home/austin/nanome/vuethereum/src/components/Status.vue";
+script$2.__file = "/home/austin/nanome/vuethereum/src/components/status/Status.vue";
 
 /* template */
 
@@ -403,24 +496,29 @@ var script$3 = {
   name: "vth-tx",
 
   props: {
+    /**
+     * An Ethereum transaction object or hash address
+     */
     tx: {
       type: [String, Object],
       required: true
     },
+    /**
+     * How frequently in milliseconds to check on the status of the transaction
+     */
     interval: {
       type: [String, Number]
     },
+    /**
+     * How much time in milliseconds before the pending transaction should error
+     */
     timeout: {
       type: [String, Number]
     }
   },
-  model: {
-    prop: "tx",
-    event: "mined"
-  },
 
   data: function () { return ({
-    pending: true,
+    pending: false,
     error: null,
     localTx: null
   }); },
@@ -438,11 +536,21 @@ var script$3 = {
       getMinedTx(txReceipt, options)
         .then(function (tx) {
           this$1.localTx = tx;
+          /**
+           * The mined transaction object
+           * @event mined
+           * @type { object }
+           */
           this$1.$emit("mined", this$1.localTx);
           this$1.pending = false;
         })
         .catch(function (error) {
           this$1.error = error;
+          /**
+           * An error object if there is one
+           * @event error
+           * @type { error }
+           */
           this$1.$emit("error", error);
           this$1.pending = false;
         });
@@ -455,6 +563,8 @@ var script$3 = {
       deep: true,
       handler: function handler(nextTx) {
         var this$1 = this;
+
+        if (!nextTx) { return }
 
         if (typeof nextTx === "object") {
           this.localTx = nextTx;
@@ -492,7 +602,7 @@ var script$3 = {
 /* script */
 var __vue_script__$3 = script$3;
 // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
-script$3.__file = "/home/austin/nanome/vuethereum/src/components/Tx.vue";
+script$3.__file = "/home/austin/nanome/vuethereum/src/components/tx/Tx.vue";
 
 /* template */
 
