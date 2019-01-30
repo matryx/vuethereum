@@ -27,7 +27,7 @@ Access the smart contract through scoped-slots, and pass it to a Vue method
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.available"
+        v-if="web3.enabled"
         :address="address"
         :abi="abi"
       >
@@ -37,7 +37,7 @@ Access the smart contract through scoped-slots, and pass it to a Vue method
         >Click me</button>
       </vth-contract>
 
-      <p v-else>No Web3 detected. Please install <a href="https://metamask.io/">MetaMask</a>.</p>
+      <p v-else>Web3 is not available. Please install <a href="https://metamask.io/">MetaMask</a>, or enable it if it is installed.</p>
     </template>
   </vth-status>
 </template>
@@ -71,7 +71,7 @@ Access the smart contract through scoped-slots, and pass its methods to a Vue me
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.available"
+        v-if="web3.enabled"
         :address="address"
         :abi="abi"
       >
@@ -81,7 +81,7 @@ Access the smart contract through scoped-slots, and pass its methods to a Vue me
         >Click me</button>
       </vth-contract>
 
-      <p v-else>No Web3 detected. Please install <a href="https://metamask.io/">MetaMask</a>.</p>
+      <p v-else>Web3 is not available. Please install <a href="https://metamask.io/">MetaMask</a>, or enable it if it is installed.</p>
     </template>
   </vth-status>
 </template>
@@ -115,7 +115,7 @@ Access the smart contract through scoped-slots, and pass its methods and some pa
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.available"
+        v-if="web3.enabled"
         :address="address"
         :abi="abi"
       >
@@ -125,7 +125,7 @@ Access the smart contract through scoped-slots, and pass its methods and some pa
         >Click me</button>
       </vth-contract>
 
-      <p v-else>No Web3 detected. Please install <a href="https://metamask.io/">MetaMask</a>.</p>
+      <p v-else>Web3 is not available. Please install <a href="https://metamask.io/">MetaMask</a>, or enable it if it is installed.</p>
     </template>
   </vth-status>
 </template>
@@ -157,7 +157,7 @@ Access the smart contract through scoped-slots, and pass its destructured method
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.available"
+        v-if="web3.enabled"
         :address="address"
         :abi="abi"
       >
@@ -167,7 +167,7 @@ Access the smart contract through scoped-slots, and pass its destructured method
         >Click me</button>
       </vth-contract>
 
-      <p v-else>No Web3 detected. Please install <a href="https://metamask.io/">MetaMask</a>.</p>
+      <p v-else>Web3 is not available. Please install <a href="https://metamask.io/">MetaMask</a>, or enable it if it is installed.</p>
     </template>
   </vth-status>
 </template>
@@ -198,7 +198,7 @@ Access the smart contract through $refs
 <template>
   <vth-status>
     <template slot-scope="web3">
-      <template v-if="web3.available">
+      <template v-if="web3.enabled">
         <vth-contract
           :address="address"
           :abi="abi"
@@ -207,7 +207,7 @@ Access the smart contract through $refs
         <button @click="callContractMethodFromRefs">Click me</button>
       </template>
 
-      <p v-else>No Web3 detected. Please install <a href="https://metamask.io/">MetaMask</a>.</p>
+      <p v-else>Web3 is not available. Please install <a href="https://metamask.io/">MetaMask</a>, or enable it if it is installed.</p>
     </template>
   </vth-status>
 </template>
