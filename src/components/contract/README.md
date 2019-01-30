@@ -28,8 +28,8 @@ Access the smart contract through scoped-slots, and pass it to a Vue method
     <template slot-scope="web3">
       <vth-contract
         v-if="web3.enabled"
-        :address="address"
-        :abi="abi"
+        v-bind:address="address"
+        v-bind:abi="abi"
       >
         <button
           slot-scope="MyContract"
@@ -72,8 +72,8 @@ Access the smart contract through scoped-slots, and pass its methods to a Vue me
     <template slot-scope="web3">
       <vth-contract
         v-if="web3.enabled"
-        :address="address"
-        :abi="abi"
+        v-bind:address="address"
+        v-bind:abi="abi"
       >
         <button
           slot-scope="MyContract"
@@ -116,8 +116,8 @@ Access the smart contract through scoped-slots, and pass its methods and some pa
     <template slot-scope="web3">
       <vth-contract
         v-if="web3.enabled"
-        :address="address"
-        :abi="abi"
+        v-bind:address="address"
+        v-bind:abi="abi"
       >
         <button
           slot-scope="MyContract"
@@ -158,8 +158,8 @@ Access the smart contract through scoped-slots, and pass its destructured method
     <template slot-scope="web3">
       <vth-contract
         v-if="web3.enabled"
-        :address="address"
-        :abi="abi"
+        v-bind:address="address"
+        v-bind:abi="abi"
       >
         <button
           slot-scope="{ doSomething }"
@@ -200,8 +200,8 @@ Access the smart contract through $refs
     <template slot-scope="web3">
       <template v-if="web3.enabled">
         <vth-contract
-          :address="address"
-          :abi="abi"
+          v-bind:address="address"
+          v-bind:abi="abi"
           ref="myContractRef"
         />
         <button @click="callContractMethodFromRefs">Click me</button>

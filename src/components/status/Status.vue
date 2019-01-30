@@ -63,7 +63,7 @@ export default {
       const getAccounts = window.ethereum.enable()
 
       this.loading = true
-      Promise.all([getAccounts, getNetwork])
+      return Promise.all([getAccounts, getNetwork])
         .then(results => {
           const [accounts, networkVersion] = results
           this.account = accounts[0]
@@ -107,7 +107,9 @@ export default {
           this.networkVersion = config.networkVersion
           this.update()
         })
-        .catch(error => {})
+        .catch(error => {
+          // TODO
+        })
     })
   },
 
