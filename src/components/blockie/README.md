@@ -1,3 +1,5 @@
+**NOTE: MetaMask casts all strings to lowercase. If you want to pass in an address that matches the MetaMask user, be sure to do the same.**
+
 ```vue
 <template>
   <vth-blockie string="vuethereum is awesome!" />

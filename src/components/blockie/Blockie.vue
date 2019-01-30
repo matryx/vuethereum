@@ -4,7 +4,7 @@ import blockies from "blockies"
 const NAME = "vth-blockie"
 
 /**
- * Component for implementing [Ehereum Blockies](https://github.com/ethereum/blockies)
+ * Component for implementing [Ethereum Blockies](https://github.com/ethereum/blockies)
  */
 export default {
   name: NAME,
