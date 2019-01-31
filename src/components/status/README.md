@@ -41,8 +41,8 @@ Defer calling ethereum.enable until later or reprompt to enable
   <vth-status deferred>
     <template slot-scope="web3">
       <pre>{{ web3 }}</pre>
-      <button v-if="web3.available" @click="web3.getWeb3">Get Web3</button>
       <p>Web3 is required for this example</p>
+      <button @click="web3.getWeb3">Get Web3</button>
     </template>
   </vth-status>
 </template>
