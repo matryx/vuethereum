@@ -1,4 +1,5 @@
 Use the scoped-slot
+
 ```vue
 <template>
   <vth-status>
@@ -12,15 +13,15 @@ export default {}
 ```
 
 Use only destructured properties
+
 ```vue
 <template>
   <vth-status>
-    <template slot-scope="{ loading, available, enabled, account, networkVersion }">
+    <template slot-scope="{ loading, available, account, networkVersion }">
       <p v-if="loading">Please confirm enabling Web3 🤔</p>
 
-      <p v-else-if="enabled">👍
-        <br />Your address: {{ account }},
-        <br />Your network version: {{ networkVersion }}
+      <p v-else-if="account">
+        👍 <br />Your address: {{ account }}, <br />Your network version: {{ networkVersion }}
       </p>
 
       <p v-else-if="available">Web3 is installed, but not enabled 😒</p>
@@ -36,6 +37,7 @@ export default {}
 ```
 
 Defer calling ethereum.enable until later or reprompt to enable
+
 ```vue
 <template>
   <vth-status deferred>

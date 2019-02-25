@@ -33,7 +33,6 @@ export default {
   data: () => ({
     loading: false,
     available: false,
-    enabled: false,
     account: null,
     networkVersion: null
   }),
@@ -68,12 +67,10 @@ export default {
           const [accounts, networkVersion] = results
           this.account = accounts[0]
           this.networkVersion = networkVersion
-          this.enabled = true
           this.loading = false
           this.update()
         })
         .catch(error => {
-          this.enabled = false
           this.account = null
           this.networkVersion = null
           this.loading = false
@@ -89,7 +86,6 @@ export default {
        */
       this.$emit("update", {
         available: this.available,
-        enabled: this.enabled,
         account: this.account,
         networkVersion: this.networkVersion
       })
@@ -113,7 +109,6 @@ export default {
     const children = this.$scopedSlots.default({
       loading: this.loading,
       available: this.available,
-      enabled: this.enabled,
       account: this.account,
       networkVersion: this.networkVersion,
       getWeb3: this.getWeb3

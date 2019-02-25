@@ -27,7 +27,7 @@ Access the smart contract through scoped-slots, and pass it to a Vue method
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.enabled"
+        v-if="web3.account"
         v-bind:address="address"
         v-bind:abi="abi"
       >
@@ -71,7 +71,7 @@ Access the smart contract through scoped-slots, and pass its methods to a Vue me
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.enabled"
+        v-if="web3.account"
         v-bind:address="address"
         v-bind:abi="abi"
       >
@@ -115,7 +115,7 @@ Access the smart contract through scoped-slots, and pass its methods and some pa
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.enabled"
+        v-if="web3.account"
         v-bind:address="address"
         v-bind:abi="abi"
       >
@@ -157,7 +157,7 @@ Access the smart contract through scoped-slots, and pass its destructured method
   <vth-status>
     <template slot-scope="web3">
       <vth-contract
-        v-if="web3.enabled"
+        v-if="web3.account"
         v-bind:address="address"
         v-bind:abi="abi"
       >
@@ -198,7 +198,7 @@ Access the smart contract through $refs
 <template>
   <vth-status>
     <template slot-scope="web3">
-      <template v-if="web3.enabled">
+      <template v-if="web3.account">
         <vth-contract
           v-bind:address="address"
           v-bind:abi="abi"

@@ -18,3 +18,14 @@ Docs: https://vuethereum.netlify.com/
 
 [![Edit Vuethereum Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/zw2l9mp65p)
 
+### Get started
+
+`npm install vuethereum`
+
+```js
+// main.js
+import Vue from "vue"
+import Vuethereum from "vuethereum"
+
+Vue.use(Vuethereum)
+```
